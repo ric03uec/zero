@@ -2,7 +2,8 @@ resources:
   - name: nightly_trigger
     type: time
     versionTemplate:
-      interval: "0 23 * * *"
+      interval: "*/5 * * * *"
+      #interval: "0 23 * * *"
     flags:
       - nightly_trigger
 
