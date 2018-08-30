@@ -2,8 +2,7 @@ resources:
   - name: nightly_trigger
     type: time
     versionTemplate:
-      interval: "*/5 * * * *"
-      #interval: "0 23 * * *"
+      interval: "0 23 * * *"
     flags:
       - nightly_trigger
 
@@ -24,6 +23,7 @@ jobs:
           name: "Verify nightly trigger"
           script:
           - echo "Nightly job triggered successfully"
+          - uptime
     on_success:
       - script: echo 'succeeded'
     on_failure:
