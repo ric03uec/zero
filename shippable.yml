@@ -1,0 +1,41 @@
+resources:
+  - name: nightly_trigger
+    type: time
+    versionTemplate:
+      interval: "0 23 * * *"
+    flags:
+      - nightly_trigger
+
+
+jobs:
+  - name: zero_runCI
+    type: runCI
+    steps:
+      - IN: nightly_trigger
+    flags:
+      - nightly_trigger
+
+  - name: verify_nightly_trigger
+    type: runSh
+    steps:
+      - IN: nightly_trigger
+      - TASK:
+          name: "Verify nightly trigger"
+          script:
+          - echo "Nightly job triggered successfully"
+    on_success:
+      - script: echo 'succeeded'
+    on_failure:
+      - script: echo 'failed'
+    flags:
+      - nightly_trigger
+
+##---------------------- runCI configuration ------------------------##
+language: python
+python:
+  - 2.7
+
+build:
+  ci:
+    - python --version
+##---------------------- end runCI configuration --------------------##
