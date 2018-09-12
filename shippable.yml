@@ -22,14 +22,25 @@ jobs:
       - TASK:
           name: "Verify nightly trigger"
           script:
-          - echo "Nightly job triggered successfully"
-          - uptime
+            - echo "Nightly job triggered successfully"
+            - uptime
     on_success:
       - script: echo 'succeeded'
     on_failure:
       - script: echo 'failed'
     flags:
       - nightly_trigger
+
+  - name: verify_windows
+    type: runSh
+    runtime:
+      nodePool: cus_win16
+    steps:
+      - TASK:
+          name: "Verify windows job"
+          script:
+            - Get-Process
+
 
 ##---------------------- runCI configuration ------------------------##
 language: python
