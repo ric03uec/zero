@@ -6,8 +6,20 @@ resources:
     flags:
       - nightly_trigger
 
+  - name: release_version
+    type: version
+    seed:
+      versionName: "7.0.4"
 
 jobs:
+  - name: prod_release
+    type: release
+    steps:
+      - IN: release_version
+        switch: off
+      - TASK: managed
+        bump: minor
+
   - name: zero_runCI
     type: runCI
     steps:
