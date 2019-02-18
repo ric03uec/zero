@@ -64,11 +64,12 @@ jobs:
               env:
                 - STATE_FILE: "job_state.env"
           script:
-            - shipctl copy_file_from_previous_state $STATE_FILE . || true
+            - shipctl copy_file_from_prev_state $STATE_FILE . || true
             - echo "PREVIOUS STATE CONTENT ----> "
-            - echo $STATE_FILE
+            - cat $STATE_FILE
             - echo "SAVING STATE FILE -----> "
-            - echo BUILD_NUMBER=$BUILD_NUMBER > $STATE_FILE
+            - echo "INDEX=$BUILD_NUMBER" > $STATE_FILE
+            - cat $STATE_FILE
             - shipctl copy_file_to_state $STATE_FILE
 
 ##---------------------- runCI configuration ------------------------##
