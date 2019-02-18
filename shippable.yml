@@ -53,6 +53,23 @@ jobs:
           script:
             - Get-Process
 
+  - name: manage_job_state
+    type: runSh
+    steps:
+      - IN: zero_runCI
+      - TASK:
+          name: "get state from previous run"
+          runtime:
+            options:
+              env:
+                - STATE_FILE: "job_state.env"
+          script:
+            - shipctl copy_file_from_previous_state $STATE_FILE . || true
+            - echo "PREVIOUS STATE CONTENT ----> "
+            - echo $STATE_FILE
+            - echo "SAVING STATE FILE -----> "
+            - echo BUILD_NUMBER=$BUILD_NUMBER > $STATE_FILE
+            - shipctl copy_file_to_state $STATE_FILE
 
 ##---------------------- runCI configuration ------------------------##
 language: python
