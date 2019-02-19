@@ -96,16 +96,13 @@ jobs:
               Copy-Item -Verbose "$env:previousStateFile" "$(Get-Location)"
             - Write-Host "PREVIOUS STATE CONTENT ----> "
             - Get-Content "$env:previousStateFile" -ErrorAction SilentlyContinue
-            - Write-Host "SAVING STATE FILE -----> "
-            - shipctl put_resource_state_multi $env:JOB_NAME "versionName=$env:BUILD_NUMBER"
-            #- Get-Content "$env:STATE_FILE"
-            #- shipctl copy_file_to_state $env:STATE_FILE
             - |
               if($env:SHIPPABLE_VER -eq $env:DRYDOCK_VER) {
                 Write-Host "Release versions equal"
               }else {
                 Write-Host "Release versions NOT equal"
               }
+            #- shipctl put_resource_state_multi $env:JOB_NAME "versionName=$env:BUILD_NUMBER"
 
 ##---------------------- runCI configuration ------------------------##
 language: python
