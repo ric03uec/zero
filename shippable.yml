@@ -89,7 +89,7 @@ jobs:
             - $env:STATE_FILE="job_state.env"
             - $env:DRYDOCK_VER="v5.6.1"
             - $env:SHIPPABLE_VER="v5.6.1"
-            - shipctl copy_file_from_prev_state $env:STATE_FILE .
+            - shipctl copy_file_from_prev_state $env:STATE_FILE $(Get-Location)
             - Write-Host "PREVIOUS STATE CONTENT ----> "
             - cat $STATE_FILE
             - Write-Host "SAVING STATE FILE -----> "
