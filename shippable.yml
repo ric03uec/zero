@@ -93,7 +93,7 @@ jobs:
                   return
               }
               Write-Output "---------------- Restoring file from state -------------------"
-              Copy-Item -Recurse -Verbose "$previousStateFile" "$(Get-Location/$env:STATE_FILE)"
+              Copy-Item -Recurse -Verbose "$previousStateFile" "$(Get-Location)/$env:STATE_FILE"
             - Write-Host "PREVIOUS STATE CONTENT ----> "
             - cat $env:STATE_FILE
             - Write-Host "SAVING STATE FILE -----> "
