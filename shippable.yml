@@ -97,7 +97,7 @@ jobs:
               Write-Output "---------------- Restoring file from state -------------------"
               Copy-Item -Recurse -Verbose "$env:previousStateFile" "$env:currentStateFile"
             - Write-Host "PREVIOUS STATE CONTENT ----> "
-            - Get-Content $env:previousStateFile -ErrorAction SilentlyContinue
+            - Get-Content .\"$env:previousStateFile" -ErrorAction SilentlyContinue
             - Write-Host "SAVING STATE FILE -----> "
             #- Write-Host "$INDEX=$env:BUILD_NUMBER" | Out-File -Encoding utf8 -Append -File "$currentStateFile"
             - shipctl put_resource_state_multi $env:JOB_NAME "versionName=$env:BUILD_NUMBER"
