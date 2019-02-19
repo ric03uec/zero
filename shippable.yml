@@ -99,7 +99,7 @@ jobs:
             - |
               if($env:SHIPPABLE_VER -eq $env:DRYDOCK_VER) {
                 Write-Host "Release versions equal"
-              else {
+              }else {
                 Write-Host "Release versions NOT equal"
               }
 
