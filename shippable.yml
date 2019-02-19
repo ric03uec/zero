@@ -72,6 +72,29 @@ jobs:
             - cat $STATE_FILE
             - shipctl copy_file_to_state $STATE_FILE
 
+  - name: manage_job_state_win2k16
+    type: runSh
+    runtime:
+      nodePool: cus_win16
+    steps:
+      - IN: zero_runCI
+      - TASK:
+          name: "get state from previous run"
+          runtime:
+            options:
+              env:
+                - STATE_FILE: "job_state.env"
+          script:
+            - $env:STATE_FILE="job_state.env"
+            - shipctl copy_file_from_prev_state $STATE_FILE .
+            - Write-Host "PREVIOUS STATE CONTENT ----> "
+            - cat $STATE_FILE
+            - Write-Host "SAVING STATE FILE -----> "
+            - Write-Host "INDEX=$BUILD_NUMBER" > $STATE_FILE
+            - cat $STATE_FILE
+            - shipctl copy_file_to_state $STATE_FILE
+
+
 ##---------------------- runCI configuration ------------------------##
 language: python
 python:
