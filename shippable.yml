@@ -81,21 +81,25 @@ jobs:
         switch: off
       - TASK:
           name: "get state from previous run"
-          runtime:
-            options:
-              env:
-                - STATE_FILE: "job_state.env"
           script:
             - $env:STATE_FILE="job_state.env"
             - $env:DRYDOCK_VER="v5.6.1"
             - $env:SHIPPABLE_VER="v5.6.2"
-              #- shipctl copy_file_from_prev_state "$env:STATE_FILE" "$(Get-Location)/$env:STATE_FILE"
-              #- Write-Host "PREVIOUS STATE CONTENT ----> "
-              #- cat $env:STATE_FILE
-              #- Write-Host "SAVING STATE FILE -----> "
-              #- Write-Host "INDEX=$BUILD_NUMBER" > $env:STATE_FILE
-              #- cat $env:STATE_FILE
-              #- shipctl copy_file_to_state $env:STATE_FILE
+            #- shipctl copy_file_from_prev_state "$env:STATE_FILE" "$(Get-Location)/$env:STATE_FILE"
+            - |
+              $previousStateFile = Join-Path "$env:JOB_PREVIOUS_STATE" "$STATE_FILE"
+              if (!(Test-Path "$previousStateFile")) {
+                  Write-Output "------  File does not exist in previous state, skipping -----"
+                  return
+              }
+              Write-Output "---------------- Restoring file from state -------------------"
+              Copy-Item -Recurse -Verbose "$previousStateFile" "$(Get-Location/$env:STATE_FILE)"
+            - Write-Host "PREVIOUS STATE CONTENT ----> "
+            - cat $env:STATE_FILE
+            - Write-Host "SAVING STATE FILE -----> "
+            - Write-Host "INDEX=$BUILD_NUMBER" > $env:STATE_FILE
+            - cat $env:STATE_FILE
+            - shipctl copy_file_to_state $env:STATE_FILE
             - |
               if($env:SHIPPABLE_VER -eq $env:DRYDOCK_VER) {
                 Write-Host "Release versions equal"
