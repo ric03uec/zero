@@ -86,14 +86,21 @@ jobs:
                 - STATE_FILE: "job_state.env"
           script:
             - $env:STATE_FILE="job_state.env"
-            - shipctl copy_file_from_prev_state $STATE_FILE .
+            - $env:DRYDOCK_VER="v5.6.1"
+            - $env:SHIPPABLE_VER="v5.6.1"
+            - shipctl copy_file_from_prev_state $env:STATE_FILE .
             - Write-Host "PREVIOUS STATE CONTENT ----> "
             - cat $STATE_FILE
             - Write-Host "SAVING STATE FILE -----> "
-            - Write-Host "INDEX=$BUILD_NUMBER" > $STATE_FILE
-            - cat $STATE_FILE
-            - shipctl copy_file_to_state $STATE_FILE
-
+            - Write-Host "INDEX=$BUILD_NUMBER" > $env:STATE_FILE
+            - cat $env:STATE_FILE
+            - shipctl copy_file_to_state $env:STATE_FILE
+            - |
+              if($env:SHIPPABLE_VER -eq $env:DRYDOCK_VER) {
+                Write-Host "Release versions equal"
+              else {
+                Write-Host "Release versions NOT equal"
+              }
 
 ##---------------------- runCI configuration ------------------------##
 language: python
