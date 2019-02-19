@@ -78,6 +78,7 @@ jobs:
       nodePool: dyn_win16
     steps:
       - IN: zero_runCI
+        switch: off
       - TASK:
           name: "get state from previous run"
           runtime:
