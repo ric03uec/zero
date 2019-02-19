@@ -75,7 +75,7 @@ jobs:
   - name: manage_job_state_win2k16
     type: runSh
     runtime:
-      nodePool: cus_win16
+      nodePool: dyn_win16
     steps:
       - IN: zero_runCI
       - TASK:
