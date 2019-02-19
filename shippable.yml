@@ -97,8 +97,8 @@ jobs:
             - Write-Host "PREVIOUS STATE CONTENT ----> "
             - cat $env:STATE_FILE
             - Write-Host "SAVING STATE FILE -----> "
-            - Write-Host "INDEX=$BUILD_NUMBER" > $env:STATE_FILE
-            - cat $env:STATE_FILE
+            - "$INDEX=$env:BUILD_NUMBER" | Out-File -Encoding utf8 -Append -File "$env:STATE_FILE"
+            - Get-Content "$env:STATE_FILE"
             - shipctl copy_file_to_state $env:STATE_FILE
             - |
               if($env:SHIPPABLE_VER -eq $env:DRYDOCK_VER) {
