@@ -89,13 +89,13 @@ jobs:
             - $env:STATE_FILE="job_state.env"
             - $env:DRYDOCK_VER="v5.6.1"
             - $env:SHIPPABLE_VER="v5.6.1"
-            - shipctl copy_file_from_prev_state "$env:STATE_FILE" "$(Get-Location)/$env:STATE_FILE"
-            - Write-Host "PREVIOUS STATE CONTENT ----> "
-            - cat $env:STATE_FILE
-            - Write-Host "SAVING STATE FILE -----> "
-            - Write-Host "INDEX=$BUILD_NUMBER" > $env:STATE_FILE
-            - cat $env:STATE_FILE
-            - shipctl copy_file_to_state $env:STATE_FILE
+              #- shipctl copy_file_from_prev_state "$env:STATE_FILE" "$(Get-Location)/$env:STATE_FILE"
+              #- Write-Host "PREVIOUS STATE CONTENT ----> "
+              #- cat $env:STATE_FILE
+              #- Write-Host "SAVING STATE FILE -----> "
+              #- Write-Host "INDEX=$BUILD_NUMBER" > $env:STATE_FILE
+              #- cat $env:STATE_FILE
+              #- shipctl copy_file_to_state $env:STATE_FILE
             - |
               if($env:SHIPPABLE_VER -eq $env:DRYDOCK_VER) {
                 Write-Host "Release versions equal"
